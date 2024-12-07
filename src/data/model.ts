@@ -2,8 +2,16 @@ export interface RootSliceState {
   game: Game;
   teams?: TeamRecord;
   currentTeam?: TeamColor;
-  currentHint?: HintPassword;
+  currentHint?: keyof typeof HintPassword;
   hints: Hints;
+  result?: string;
+  resultModalOpened?: boolean;
+  answersModalOpened?: boolean;
+  isFinalAnswers?: boolean;
+  hintPasswordModal?: boolean;
+  startTime: number;
+  answers: Answers;
+  finishedTeams: FinishedTeams;
 }
 
 export type TeamRecord = {
@@ -17,23 +25,14 @@ export type Game = {
 export type Team = {
   color: TeamColor;
   finishedAt?: string;
-  hints: TeamHintRecord;
+  hints?: TeamHintRecord;
 };
 
 export type TeamHintRecord = {
-  [K in HintPassword]?: {
-    blocked: boolean;
-  };
+  [K in HintPassword]?: Hint;
 };
 
 export type Answers = {
-  [K in HintType]: {
-    type: K;
-    answer: AnswerRecord;
-  };
-};
-
-export type AnswerRecord = {
   [K in HintType]: {
     type: K;
     answer: K extends HintType.KILLER
@@ -44,6 +43,8 @@ export type AnswerRecord = {
       ? Weapon
       : K extends HintType.MURDER_METHOD
       ? MurderMethod
+      : K extends HintType.CRIME_LOCAL
+      ? CrimeLocal
       : K extends HintType.CRIME_TIME
       ? CrimeTime
       : never;
@@ -54,6 +55,7 @@ export type Hint = {
   fileType: HintFileType;
   filePath: string;
   password: HintPassword;
+  files: string[];
 };
 
 export type Hints = {
@@ -86,11 +88,12 @@ export enum HintFileType {
 }
 
 export enum HintType {
-  KILLER = "killer",
-  MURDER_REASON = "murder_reason",
-  WEAPON = "weapon",
-  MURDER_METHOD = "murder_method",
-  CRIME_TIME = "crime_time",
+  KILLER = "Suspeito",
+  MURDER_REASON = "Motivação",
+  WEAPON = "Arma do Crime",
+  MURDER_METHOD = "Método de homicídio",
+  CRIME_TIME = "Horário do Crime",
+  CRIME_LOCAL = "Local do Crime",
 }
 
 export enum Killer {
@@ -111,16 +114,6 @@ export enum Weapon {
   CAR = "Carro",
   POOL = "Piscina",
   OSCAR_TROPHY = "Troféu do Oscar",
-}
-
-export enum CrimeScene {
-  VIP_ROOM = "Sala VIP",
-  RECORDING_STUDIO = "Estúdio de gravação",
-  GUEST_ROOM = "Quarto de Hóspede",
-  POOL_AREA = "Área da piscina",
-  STREET = "Rua",
-  DRESSING_ROOM = "Camarim",
-  PARKING_LOT = "Estacionamento",
 }
 
 export enum MurderMethod {
@@ -152,3 +145,20 @@ export enum MurderReason {
   EMOTIONAL_DISTURBANCE = "Distúrbio emocional",
   REVENGE = "Vingança",
 }
+
+export enum CrimeLocal {
+  VIP_ROOM = "Sala VIP",
+  RECORDING_STUDIO = "Estúdio de gravação",
+  GUEST_ROOM = "Quarto de Hospede",
+  POOL_AREA = "Área da piscina",
+  STREET = "Rua",
+  CLOSET = "CAMARIM",
+  PARKING = "Estacionamento",
+}
+
+export type FinishedTeams = {
+  [k in TeamColor]?: {
+    answers: { [x: string]: { answer: string } };
+    time: string;
+  };
+};

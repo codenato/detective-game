@@ -9,8 +9,9 @@ export default {
       offwhite: "#E2DFD2",
       black: "#0A0A0A",
       white: "#FFF",
-      disabled: "#EEE",
-      text_disabled: "#101010",
+      disabled: "#2A2A2A",
+      text_disabled: "#4A4A4A",
+      error: "#5E0011"
     },
     extend: {},
   },

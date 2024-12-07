@@ -1,22 +1,16 @@
-import { TeamColor } from "../data/model";
-import { getColor } from "../helpers";
 import { ContainerButtons } from "./container-buttons";
-import { ContainerHint } from "./container-hint";
 import { Hints } from "./hints";
 
-interface TeamContainerProps {
-  teamColor: TeamColor;
-}
+import { TeamHintContainer } from "./team-hint-container";
 
-export function TeamContainer({ teamColor }: TeamContainerProps) {
+export function TeamContainer() {
   return (
     <div
-      className={`${getColor(
-        teamColor
-      )} flex flex-col flex-1 py-4 w-[1024px] px-4`}
+      className={`
+      flex flex-col flex-1 py-4 w-[1024px] px-8 bg-blue border-4 border-white`}
     >
       <Hints />
-      <ContainerHint />
+      <TeamHintContainer />
       <ContainerButtons />
     </div>
   );
