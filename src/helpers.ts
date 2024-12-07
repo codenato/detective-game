@@ -19,7 +19,7 @@ export function getEnumKeyByValue<T extends { [key: string]: string }>(
   enumObj: T,
   value: string
 ): keyof T | null {
-  const entry = Object.entries(enumObj).find(([key, val]) => val === value);
+  const entry = Object.entries(enumObj).find(([_, val]) => val === value);
   return entry ? (entry[0] as keyof T) : null;
 }
 
