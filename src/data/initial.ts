@@ -9,27 +9,13 @@ import {
   MurderReason,
   RootSliceState,
   TeamColor,
-  // TeamHintRecord,
   TeamRecord,
   Weapon,
 } from "./model";
 
-// const initialHints = Object.keys(HintPassword).reduce<TeamHintRecord>(
-//   (acc, key) => {
-//     acc[key as HintPassword] = {
-//       blocked: true,
-//     };
-//     return acc;
-//   },
-//   {}
-// );
-
 export const initialState: RootSliceState = {
   startTime: new Date().getTime(),
   finishedTeams: {},
-  game: {
-    startDate: undefined,
-  },
   teams: Object.values(TeamColor).reduce<TeamRecord>((acc, key) => {
     acc[key as TeamColor] = {
       color: key as TeamColor,

@@ -1,5 +1,4 @@
 export interface RootSliceState {
-  game: Game;
   teams?: TeamRecord;
   currentTeam?: TeamColor;
   currentHint?: keyof typeof HintPassword;
@@ -16,10 +15,6 @@ export interface RootSliceState {
 
 export type TeamRecord = {
   [k in TeamColor]?: Team;
-};
-
-export type Game = {
-  startDate?: string;
 };
 
 export type Team = {
